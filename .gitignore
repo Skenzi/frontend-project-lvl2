@@ -1,0 +1,4 @@
+/node-modules/
+.log
+dist
+coverage

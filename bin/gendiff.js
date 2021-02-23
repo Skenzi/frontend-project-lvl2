@@ -2,7 +2,7 @@
 
 import { createRequire } from 'module';
 import program from 'commander';
-import genDiff from '../src/findDiffTree.js';
+import genDiff from '../index.js';
 
 const require = createRequire(import.meta.url);
 const packageConfig = require('../package.json');
@@ -13,9 +13,9 @@ program
   .version(version)
   .description(description)
   .arguments('<filepath1> <filepath2>')
-  .option('-f, --format [type]', 'output format')
-  .action((filepath1, filepath2) => {
-    console.log(genDiff(filepath1, filepath2));
+  .option('-f, --format [type]', 'output format', 'stylish')
+  .action((filepath1, filepath2, type) => {
+    console.log(genDiff(filepath1, filepath2, type.format));
   });
 
 program.parse(process.argv);

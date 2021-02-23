@@ -26,6 +26,10 @@ jobs:
         # Run Linter
         run: |
           make lint
+      - name: Run linter
+        # Run Tests
+        run: |
+          make test
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

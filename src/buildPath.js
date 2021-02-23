@@ -1,9 +1,9 @@
 import path from 'path';
 
-const fullPath = (filepath) => {
+const getPathToFile = (filepath) => {
   const workDir = process.cwd();
-  const newPath = path.resolve(workDir, `src/${filepath}`);
-  return newPath;
+  const getPath = path.resolve(workDir, filepath);
+  return getPath;
 };
 
-export default fullPath;
+export default getPathToFile;

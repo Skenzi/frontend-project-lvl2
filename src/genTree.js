@@ -3,7 +3,8 @@ import _ from 'lodash';
 const genTree = (dataFile1, dataFile2) => {
   const keys1 = Object.keys(dataFile1);
   const keys2 = Object.keys(dataFile2);
-  const unionKeys = _.sortBy(_.union(keys1, keys2));
+  const unionKeys = _.union(keys1, keys2);
+  const sortedKeys = _.sortBy(unionKeys);
 
   const addElemenet = (key) => {
     if (!_.has(dataFile1, key)) {
@@ -22,7 +23,7 @@ const genTree = (dataFile1, dataFile2) => {
     }
     return { key, valueAfter: dataFile2[key], status: 'unchanged' };
   };
-  return unionKeys.map(addElemenet);
+  return sortedKeys.map(addElemenet);
 };
 
 export default genTree;

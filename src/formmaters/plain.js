@@ -1,7 +1,12 @@
 import _ from 'lodash';
 
 const pathToKey = (path, key) => (path === '' ? key : `${path}.${key}`);
-const renderValue = (value) => (_.isObject(value) ? '[complex value]' : (typeof value === 'string') ? `'${value}'` : value);
+const renderValue = (value) => {
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+  return (typeof value === 'string') ? `'${value}'` : value;
+};
 
 const toPlain = (tree) => {
   const iter = (dataTree, path) => {

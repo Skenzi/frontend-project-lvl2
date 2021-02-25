@@ -9,7 +9,7 @@ const genDiff = (filepath1, filepath2, formatName) => {
   const fullPath2 = getPathToFile(filepath2);
   const dataFile2 = parseFile(fullPath2);
   const tree = genTree(dataFile1, dataFile2);
-  return formmater(tree, formatName.toLowerCase());
+  return formmater(tree, formatName);
 };
 
 export default genDiff;

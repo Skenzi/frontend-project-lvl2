@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
 const genTree = (dataFile1, dataFile2) => {
-  const keys1 = Object.keys(dataFile1);
-  const keys2 = Object.keys(dataFile2);
-  const unionKeys = _.union(keys1, keys2);
+  const keysFile1 = Object.keys(dataFile1);
+  const keysFile2 = Object.keys(dataFile2);
+  const unionKeys = _.union(keysFile1, keysFile2);
   const sortedKeys = _.sortBy(unionKeys);
 
   const addElemenet = (key) => {

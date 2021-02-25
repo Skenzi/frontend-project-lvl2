@@ -12,7 +12,7 @@ const formmater = (tree, formatName) => {
   if (formatName === 'json') {
     return toJson(tree);
   }
-  throw new Error(`Unexpected format: '${formatName}'.`);
+  return 0;
 };
 
 export default formmater;

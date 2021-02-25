@@ -12,9 +12,15 @@ jobs:
         node-version: [14.x]
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install project
+        # Install project
+        run: |
+          make install
       - name: Test & publish code coverage
 
-        uses: paambaati/codeclimate-action@v2.7.5
+        uses: Skenzi/codeclimate-action@v2.7.5
 
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

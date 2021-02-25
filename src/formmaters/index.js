@@ -1,4 +1,4 @@
-import toStylish from './nested.js';
+import toStylish from './stylish.js';
 import toPlain from './plain.js';
 import toJson from './json.js';
 
@@ -12,7 +12,7 @@ const formmater = (tree, formatName) => {
   if (formatName === 'json') {
     return toJson(tree);
   }
-  throw new Error(`Sorry, but '${formatName}' wrong format.`);
+  throw new Error(`Unexpected format: '${formatName}'.`);
 };
 
 export default formmater;

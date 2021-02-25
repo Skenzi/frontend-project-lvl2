@@ -7,20 +7,20 @@ const genTree = (dataFile1, dataFile2) => {
 
   const addElemenet = (key) => {
     if (!_.has(dataFile1, key)) {
-      return { key, afterValue: dataFile2[key], status: 'added' };
+      return { key, valueAfter: dataFile2[key], status: 'added' };
     }
     if (!_.has(dataFile2, key)) {
-      return { key, beforeValue: dataFile1[key], status: 'deleted' };
+      return { key, valueBefore: dataFile1[key], status: 'deleted' };
     }
     if (_.isObject(dataFile1[key]) && _.isObject(dataFile2[key])) {
       return { key, childrens: genTree(dataFile1[key], dataFile2[key]), status: 'nested' };
     }
     if (dataFile1[key] !== dataFile2[key]) {
       return {
-        key, beforeValue: dataFile1[key], afterValue: dataFile2[key], status: 'changed',
+        key, valueBefore: dataFile1[key], valueAfter: dataFile2[key], status: 'changed',
       };
     }
-    return { key, afterValue: dataFile2[key], status: 'unchanged' };
+    return { key, valueAfter: dataFile2[key], status: 'unchanged' };
   };
   return unionKeys.map(addElemenet);
 };

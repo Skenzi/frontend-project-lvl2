@@ -3,7 +3,7 @@ import getPathToFile from './buildPath.js';
 import genTree from './genTree.js';
 import formmater from './formmaters/index.js';
 
-const genDiff = (filepath1, filepath2, formatName) => {
+const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
   const fullPath1 = getPathToFile(filepath1);
   const dataFile1 = parseFile(fullPath1);
   const fullPath2 = getPathToFile(filepath2);

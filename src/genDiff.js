@@ -1,4 +1,4 @@
-import parseFile from './parses.js';
+import parseFile from './parsers.js';
 import getPathToFile from './buildPath.js';
 import genTree from './genTree.js';
 import formmater from './formmaters/index.js';

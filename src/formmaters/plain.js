@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 const pathToKey = (path, key) => (path === '' ? key : `${path}.${key}`);
+
 const renderValue = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
@@ -9,12 +10,12 @@ const renderValue = (value) => {
 };
 
 const toPlain = (tree) => {
-  const iter = (dataTree, path) => {
-    const result = dataTree
+  const iter = (nodes, path) => {
+    const result = nodes
       .filter((node) => node.status !== 'unchanged')
       .map((node) => {
         const {
-          key, valueAfter, valueBefore, status, childrens,
+          key, valueAfter, valueBefore, status, children,
         } = node;
         if (status === 'added') {
           return `Property '${pathToKey(path, key)}' was added with value: ${renderValue(valueAfter)}`;
@@ -25,10 +26,11 @@ const toPlain = (tree) => {
         if (status === 'deleted') {
           return `Property '${pathToKey(path, key)}' was removed`;
         }
-        return iter(childrens, pathToKey(path, key));
-      });
+        return iter(children, pathToKey(path, key));
+      })
+      .join('\n');
 
-    return result.join('\n');
+    return result;
   };
   return iter(tree, '');
 };

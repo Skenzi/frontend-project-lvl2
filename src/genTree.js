@@ -1,9 +1,7 @@
 import _ from 'lodash';
 
 const genTree = (dataFile1, dataFile2) => {
-  const keysFile1 = Object.keys(dataFile1);
-  const keysFile2 = Object.keys(dataFile2);
-  const unionKeys = _.union(keysFile1, keysFile2);
+  const unionKeys = _.union(Object.keys(dataFile1), Object.keys(dataFile2));
   const sortedKeys = _.sortBy(unionKeys);
 
   const addElemenet = (key) => {
@@ -14,7 +12,7 @@ const genTree = (dataFile1, dataFile2) => {
       return { key, valueBefore: dataFile1[key], status: 'deleted' };
     }
     if (_.isObject(dataFile1[key]) && _.isObject(dataFile2[key])) {
-      return { key, childrens: genTree(dataFile1[key], dataFile2[key]), status: 'nested' };
+      return { key, children: genTree(dataFile1[key], dataFile2[key]), status: 'nested' };
     }
     if (dataFile1[key] !== dataFile2[key]) {
       return {

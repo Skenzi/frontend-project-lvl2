@@ -12,10 +12,10 @@ const stringify = (element, depth) => {
 };
 
 const toStylish = (tree) => {
-  const iter = (dataTree, depth) => {
-    const result = dataTree.map((node) => {
+  const iter = (nodes, depth) => {
+    const result = nodes.map((node) => {
       const {
-        key, valueAfter, valueBefore, status, childrens,
+        key, valueAfter, valueBefore, status, children,
       } = node;
       if (status === 'added') {
         return `${space(depth + 2)}+ ${key}: ${stringify(valueAfter, depth)}`;
@@ -27,7 +27,7 @@ const toStylish = (tree) => {
         return `${space(depth + 2)}- ${key}: ${stringify(valueBefore, depth)}`;
       }
       if (status === 'nested') {
-        return `${space(depth + 4)}${key}: {\n${iter(childrens, depth + 4)}\n${space(depth + 4)}}`;
+        return `${space(depth + 4)}${key}: {\n${iter(children, depth + 4)}\n${space(depth + 4)}}`;
       }
       return `${space(depth + 4)}${key}: ${stringify(valueAfter, depth)}`;
     });

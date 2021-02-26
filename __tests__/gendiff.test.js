@@ -9,7 +9,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const fullPathTest = (file) => path.join(__dirname, '..', '__fixtures__', file);
-const readTestFile = (file) => fs.readFileSync(file, 'utf-8');
 
 const elements = [['json', 'stylish'], ['json', 'plain'], ['json', 'json'], ['yml', 'stylish'], ['yml', 'plain'], ['yml', 'json']];
 
@@ -19,8 +18,7 @@ describe('gendiff', () => {
     const getPathToTest2 = fullPathTest(`after.${element}`);
 
     const getPathToResult = fullPathTest(`result_${format}.txt`);
-    const dataResult = readTestFile(getPathToResult);
-
+    const dataResult = fs.readFileSync(getPathToResult, 'utf-8');
     expect(genDiff(getPathToTest1, getPathToTest2, format)).toEqual(dataResult);
   });
 });

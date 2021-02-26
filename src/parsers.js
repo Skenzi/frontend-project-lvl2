@@ -3,13 +3,14 @@ import yaml from 'js-yaml';
 import path from 'path';
 
 const parseFile = (file) => {
-  if (path.extname(file) === '.json') {
+  const extname = path.extname(file);
+  if (extname === '.json') {
     return JSON.parse(fs.readFileSync(file, 'utf-8'));
   }
-  if (path.extname(file) === '.yml') {
+  if (extname === '.yml') {
     return yaml.load(fs.readFileSync(file, 'utf-8'));
   }
-  return 'error';
+  throw new Error('Unexpected extname: ');
 };
 
 export default parseFile;

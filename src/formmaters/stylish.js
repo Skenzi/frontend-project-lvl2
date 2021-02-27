@@ -2,17 +2,17 @@ import _ from 'lodash';
 
 const space = (depth) => ' '.repeat(depth);
 
-const stringify = (element, depth) => {
-  if (!(_.isObject(element))) {
-    return element;
+const stringify = (value, depth) => {
+  if (!(_.isObject(value))) {
+    return value;
   }
-  const keys = Object.keys(element);
-  const result = keys.map((key) => `${space(depth + 8)}${key}: ${stringify(element[key], depth + 4)}`);
+  const keys = Object.keys(value);
+  const result = keys.map((key) => `${space(depth + 8)}${key}: ${stringify(value[key], depth + 4)}`);
   return `{\n${result.join('\n')}\n${space(depth + 4)}}`;
 };
 
-const toStylish = (tree) => {
-  const renderTree = (nodes, depth) => {
+const renderToStylishFormat = (tree) => {
+  const convertingTree = (nodes, depth) => {
     const result = nodes.map((node) => {
       const {
         key, valueAfter, valueBefore, status, children,
@@ -23,7 +23,7 @@ const toStylish = (tree) => {
         case 'changed':
           return `${space(depth + 2)}- ${key}: ${stringify(valueBefore, depth)}\n${space(depth + 2)}+ ${key}: ${stringify(valueAfter, depth)}`;
         case 'nested':
-          return `${space(depth + 4)}${key}: {\n${renderTree(children, depth + 4)}\n${space(depth + 4)}}`;
+          return `${space(depth + 4)}${key}: {\n${convertingTree(children, depth + 4)}\n${space(depth + 4)}}`;
         case 'deleted':
           return `${space(depth + 2)}- ${key}: ${stringify(valueBefore, depth)}`;
         default:
@@ -33,7 +33,7 @@ const toStylish = (tree) => {
     return result.join('\n');
   };
 
-  return `{\n${renderTree(tree, 0)}\n}`;
+  return `{\n${convertingTree(tree, 0)}\n}`;
 };
 
-export default toStylish;
+export default renderToStylishFormat;

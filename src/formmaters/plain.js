@@ -2,15 +2,15 @@ import _ from 'lodash';
 
 const pathToKey = (path, key) => (path === '' ? key : `${path}.${key}`);
 
-const renderValue = (value) => {
+const stringify = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
   }
   return (typeof value === 'string') ? `'${value}'` : value;
 };
 
-const toPlain = (tree) => {
-  const renderTree = (nodes, path) => {
+const renderToPlainFormat = (tree) => {
+  const convertingTree = (nodes, path) => {
     const result = nodes
       .filter((node) => node.status !== 'unchanged')
       .map((node) => {
@@ -18,20 +18,20 @@ const toPlain = (tree) => {
           key, valueAfter, valueBefore, status, children,
         } = node;
         if (status === 'added') {
-          return `Property '${pathToKey(path, key)}' was added with value: ${renderValue(valueAfter)}`;
+          return `Property '${pathToKey(path, key)}' was added with value: ${stringify(valueAfter)}`;
         }
         if (status === 'changed') {
-          return `Property '${pathToKey(path, key)}' was updated. From ${renderValue(valueBefore)} to ${renderValue(valueAfter)}`;
+          return `Property '${pathToKey(path, key)}' was updated. From ${stringify(valueBefore)} to ${stringify(valueAfter)}`;
         }
         if (status === 'deleted') {
           return `Property '${pathToKey(path, key)}' was removed`;
         }
-        return renderTree(children, pathToKey(path, key));
+        return convertingTree(children, pathToKey(path, key));
       });
 
     return result.join('\n');
   };
-  return renderTree(tree, '');
+  return convertingTree(tree, '');
 };
 
-export default toPlain;
+export default renderToPlainFormat;

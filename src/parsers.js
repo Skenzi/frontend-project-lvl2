@@ -1,14 +1,11 @@
-import fs from 'fs';
 import yaml from 'js-yaml';
-import path from 'path';
 
-const parseFile = (file) => {
-  const extension = path.extname(file);
+const parseFile = (fileData, extension) => {
   if (extension === '.json') {
-    return JSON.parse(fs.readFileSync(file, 'utf-8'));
+    return JSON.parse(fileData);
   }
   if (extension === '.yml') {
-    return yaml.load(fs.readFileSync(file, 'utf-8'));
+    return yaml.load(fileData);
   }
   throw new Error(`Unexpected extension: ${extension}`);
 };

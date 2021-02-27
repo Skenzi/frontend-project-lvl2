@@ -1,16 +1,16 @@
-import toStylish from './stylish.js';
-import toPlain from './plain.js';
-import toJson from './json.js';
+import renderToStylishFormat from './stylish.js';
+import renderToPlainFormat from './plain.js';
+import renderToJsonFormat from './json.js';
 
 const formmater = (tree, formatName) => {
   if (formatName === 'stylish') {
-    return toStylish(tree);
+    return renderToStylishFormat(tree);
   }
   if (formatName === 'plain') {
-    return toPlain(tree);
+    return renderToPlainFormat(tree);
   }
   if (formatName === 'json') {
-    return toJson(tree);
+    return renderToJsonFormat(tree);
   }
   throw new Error(`Unexpected format: ${formatName}`);
 };

@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 
 const fullPathTest = (file) => path.join(__dirname, '..', '__fixtures__', file);
 
-const elements = [
+const cases = [
   ['json', 'stylish'],
   ['json', 'plain'],
   ['json', 'json'],
@@ -20,9 +20,9 @@ const elements = [
 ];
 
 describe('gendiff', () => {
-  test.each(elements)('gendiff %s %s', (element, format) => {
-    const getPathToTest1 = fullPathTest(`before.${element}`);
-    const getPathToTest2 = fullPathTest(`after.${element}`);
+  test.each(cases)('gendiff %s %s', (extension, format) => {
+    const getPathToTest1 = fullPathTest(`before.${extension}`);
+    const getPathToTest2 = fullPathTest(`after.${extension}`);
 
     const getPathToResult = fullPathTest(`result_${format}.txt`);
     const dataResult = fs.readFileSync(getPathToResult, 'utf-8');
@@ -39,7 +39,7 @@ describe('other tests', () => {
     const dataResult = fs.readFileSync(getPathToResult, 'utf-8');
     expect(genDiff(getPathToTest1, getPathToTest2)).toEqual(dataResult);
   });
-  test('.json with .yml', () => {
+  test('diff between .json and .yml', () => {
     const getPathToTest1 = fullPathTest('before.json');
     const getPathToTest2 = fullPathTest('after.yml');
 
@@ -55,7 +55,7 @@ describe('other tests', () => {
   });
   test('wrong extension', () => {
     const getPathToTest1 = fullPathTest('before.json');
-    const getPathToTest2 = fullPathTest('after.exe');
+    const getPathToTest2 = fullPathTest('result_plain.txt');
 
     expect(() => genDiff(getPathToTest1, getPathToTest2, 'plain')).toThrow();
   });

@@ -14,19 +14,22 @@ const stringify = (element, depth) => {
 const toStylish = (tree) => {
   const renderTree = (nodes, depth) => {
     const result = nodes.map((node) => {
-      if (node.status === 'added') {
-        return `${space(depth + 2)}+ ${node.key}: ${stringify(node.valueAfter, depth)}`;
+      const {
+        key, valueAfter, valueBefore, status, children,
+      } = node;
+      if (status === 'added') {
+        return `${space(depth + 2)}+ ${key}: ${stringify(valueAfter, depth)}`;
       }
-      if (node.status === 'changed') {
-        return `${space(depth + 2)}- ${node.key}: ${stringify(node.valueBefore, depth)}\n${space(depth + 2)}+ ${node.key}: ${stringify(node.valueAfter, depth)}`;
+      if (status === 'changed') {
+        return `${space(depth + 2)}- ${key}: ${stringify(valueBefore, depth)}\n${space(depth + 2)}+ ${key}: ${stringify(valueAfter, depth)}`;
       }
-      if (node.status === 'deleted') {
-        return `${space(depth + 2)}- ${node.key}: ${stringify(node.valueBefore, depth)}`;
+      if (status === 'deleted') {
+        return `${space(depth + 2)}- ${key}: ${stringify(valueBefore, depth)}`;
       }
-      if (node.status === 'nested') {
-        return `${space(depth + 4)}${node.key}: {\n${renderTree(node.children, depth + 4)}\n${space(depth + 4)}}`;
+      if (status === 'nested') {
+        return `${space(depth + 4)}${key}: {\n${renderTree(children, depth + 4)}\n${space(depth + 4)}}`;
       }
-      return `${space(depth + 4)}${node.key}: ${stringify(node.valueAfter, depth)}`;
+      return `${space(depth + 4)}${key}: ${stringify(valueAfter, depth)}`;
     });
     return result.join('\n');
   };

@@ -12,7 +12,8 @@ const renderValue = (value) => {
 const toPlain = (tree) => {
   const renderTree = (nodes, path) => {
     const result = nodes
-      .flatMap((node) => {
+      .filter((node) => node.status !== 'unchanged')
+      .map((node) => {
         const {
           key, valueAfter, valueBefore, status, children,
         } = node;
@@ -25,14 +26,10 @@ const toPlain = (tree) => {
         if (status === 'deleted') {
           return `Property '${pathToKey(path, key)}' was removed`;
         }
-        if (status === 'nested') {
-          return renderTree(children, pathToKey(path, key));
-        }
-        return [];
-      })
-      .join('\n');
+        return renderTree(children, pathToKey(path, key));
+      });
 
-    return result;
+    return result.join('\n');
   };
   return renderTree(tree, '');
 };

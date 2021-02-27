@@ -39,4 +39,24 @@ describe('other tests', () => {
     const dataResult = fs.readFileSync(getPathToResult, 'utf-8');
     expect(genDiff(getPathToTest1, getPathToTest2)).toEqual(dataResult);
   });
+  test('.json with .yml', () => {
+    const getPathToTest1 = fullPathTest('before.json');
+    const getPathToTest2 = fullPathTest('after.yml');
+
+    const getPathToResult = fullPathTest('result_stylish.txt');
+    const dataResult = fs.readFileSync(getPathToResult, 'utf-8');
+    expect(genDiff(getPathToTest1, getPathToTest2)).toEqual(dataResult);
+  });
+  test('wrong format', () => {
+    const getPathToTest1 = fullPathTest('before.json');
+    const getPathToTest2 = fullPathTest('after.json');
+
+    expect(() => genDiff(getPathToTest1, getPathToTest2, 'error')).toThrow();
+  });
+  test('wrong extension', () => {
+    const getPathToTest1 = fullPathTest('before.json');
+    const getPathToTest2 = fullPathTest('after.exe');
+
+    expect(() => genDiff(getPathToTest1, getPathToTest2, 'plain')).toThrow();
+  });
 });

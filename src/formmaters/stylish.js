@@ -12,29 +12,26 @@ const stringify = (element, depth) => {
 };
 
 const toStylish = (tree) => {
-  const iter = (nodes, depth) => {
+  const renderTree = (nodes, depth) => {
     const result = nodes.map((node) => {
-      const {
-        key, valueAfter, valueBefore, status, children,
-      } = node;
-      if (status === 'added') {
-        return `${space(depth + 2)}+ ${key}: ${stringify(valueAfter, depth)}`;
+      if (node.status === 'added') {
+        return `${space(depth + 2)}+ ${node.key}: ${stringify(node.valueAfter, depth)}`;
       }
-      if (status === 'changed') {
-        return `${space(depth + 2)}- ${key}: ${stringify(valueBefore, depth)}\n${space(depth + 2)}+ ${key}: ${stringify(valueAfter, depth)}`;
+      if (node.status === 'changed') {
+        return `${space(depth + 2)}- ${node.key}: ${stringify(node.valueBefore, depth)}\n${space(depth + 2)}+ ${node.key}: ${stringify(node.valueAfter, depth)}`;
       }
-      if (status === 'deleted') {
-        return `${space(depth + 2)}- ${key}: ${stringify(valueBefore, depth)}`;
+      if (node.status === 'deleted') {
+        return `${space(depth + 2)}- ${node.key}: ${stringify(node.valueBefore, depth)}`;
       }
-      if (status === 'nested') {
-        return `${space(depth + 4)}${key}: {\n${iter(children, depth + 4)}\n${space(depth + 4)}}`;
+      if (node.status === 'nested') {
+        return `${space(depth + 4)}${node.key}: {\n${renderTree(node.children, depth + 4)}\n${space(depth + 4)}}`;
       }
-      return `${space(depth + 4)}${key}: ${stringify(valueAfter, depth)}`;
+      return `${space(depth + 4)}${node.key}: ${stringify(node.valueAfter, depth)}`;
     });
     return result.join('\n');
   };
 
-  return `{\n${iter(tree, 0)}\n}`;
+  return `{\n${renderTree(tree, 0)}\n}`;
 };
 
 export default toStylish;

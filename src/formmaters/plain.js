@@ -10,10 +10,9 @@ const renderValue = (value) => {
 };
 
 const toPlain = (tree) => {
-  const iter = (nodes, path) => {
+  const renderTree = (nodes, path) => {
     const result = nodes
-      .filter((node) => node.status !== 'unchanged')
-      .map((node) => {
+      .flatMap((node) => {
         const {
           key, valueAfter, valueBefore, status, children,
         } = node;
@@ -26,13 +25,16 @@ const toPlain = (tree) => {
         if (status === 'deleted') {
           return `Property '${pathToKey(path, key)}' was removed`;
         }
-        return iter(children, pathToKey(path, key));
+        if (status === 'nested') {
+          return renderTree(children, pathToKey(path, key));
+        }
+        return [];
       })
       .join('\n');
 
     return result;
   };
-  return iter(tree, '');
+  return renderTree(tree, '');
 };
 
 export default toPlain;

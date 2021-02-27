@@ -1,6 +1,9 @@
 # Makefile
+install-dev: 
+	npm install 
+
 install: 
-	npm install
+	npm ci
 
 publish:
 	npm publish --dry-run

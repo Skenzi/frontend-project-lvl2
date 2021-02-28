@@ -17,16 +17,16 @@ const renderToPlainFormat = (tree) => {
         const {
           key, valueAfter, valueBefore, status, children,
         } = node;
-        if (status === 'added') {
-          return `Property '${pathToKey(path, key)}' was added with value: ${stringify(valueAfter)}`;
+        switch (status) {
+          case 'added':
+            return `Property '${pathToKey(path, key)}' was added with value: ${stringify(valueAfter)}`;
+          case 'changed':
+            return `Property '${pathToKey(path, key)}' was updated. From ${stringify(valueBefore)} to ${stringify(valueAfter)}`;
+          case 'deleted':
+            return `Property '${pathToKey(path, key)}' was removed`;
+          default:
+            return convertingTree(children, pathToKey(path, key));
         }
-        if (status === 'changed') {
-          return `Property '${pathToKey(path, key)}' was updated. From ${stringify(valueBefore)} to ${stringify(valueAfter)}`;
-        }
-        if (status === 'deleted') {
-          return `Property '${pathToKey(path, key)}' was removed`;
-        }
-        return convertingTree(children, pathToKey(path, key));
       });
 
     return result.join('\n');

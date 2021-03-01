@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const pathToKey = (path, key) => (path === '' ? key : `${path}.${key}`);
+const buildPathToKey = (path, key) => (path === '' ? key : `${path}.${key}`);
 
 const stringify = (value) => {
   if (_.isObject(value)) {
@@ -19,13 +19,13 @@ const renderToPlainFormat = (tree) => {
         } = node;
         switch (status) {
           case 'added':
-            return `Property '${pathToKey(path, key)}' was added with value: ${stringify(valueAfter)}`;
+            return `Property '${buildPathToKey(path, key)}' was added with value: ${stringify(valueAfter)}`;
           case 'changed':
-            return `Property '${pathToKey(path, key)}' was updated. From ${stringify(valueBefore)} to ${stringify(valueAfter)}`;
+            return `Property '${buildPathToKey(path, key)}' was updated. From ${stringify(valueBefore)} to ${stringify(valueAfter)}`;
           case 'deleted':
-            return `Property '${pathToKey(path, key)}' was removed`;
+            return `Property '${buildPathToKey(path, key)}' was removed`;
           default:
-            return convertingTree(children, pathToKey(path, key));
+            return convertingTree(children, buildPathToKey(path, key));
         }
       });
 

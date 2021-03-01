@@ -2,7 +2,7 @@ import renderToStylishFormat from './stylish.js';
 import renderToPlainFormat from './plain.js';
 import renderToJsonFormat from './json.js';
 
-const formmater = (tree, formatName) => {
+const render = (tree, formatName) => {
   if (formatName === 'stylish') {
     return renderToStylishFormat(tree);
   }
@@ -15,4 +15,4 @@ const formmater = (tree, formatName) => {
   throw new Error(`Unexpected format: ${formatName}`);
 };
 
-export default formmater;
+export default render;

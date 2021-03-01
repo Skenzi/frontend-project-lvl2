@@ -1,15 +1,13 @@
 {
   "name": "@hexlet/code",
-  "type": "module",
   "version": "0.4.0",
   "description": "Compares two configuration files and show a difference",
   "main": "index.js",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
-  "jest": {
-    "testEnvironment": "jest-environment-node",
-    "transform": {}
+  "engines": {
+    "node": ">=14"
   },
   "scripts": {
     "test": "npx jest"
@@ -22,6 +20,11 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Skenzi/frontend-project-lvl2/issues"
+  },
+  "type": "module",
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
   },
   "homepage": "https://github.com/Skenzi/frontend-project-lvl2#readme",
   "devDependencies": {

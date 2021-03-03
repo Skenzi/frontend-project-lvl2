@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import parse from './parsers.js';
+import parse from './parser.js';
 import genTree from './genTree.js';
 import render from './formmaters/index.js';
 
